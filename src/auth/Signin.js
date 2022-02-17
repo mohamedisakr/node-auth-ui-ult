@@ -9,7 +9,7 @@ const Signin = () => {
   const [buttonText, setButtonText] = useState('Submit')
 
   const {REACT_APP_API_URL} = process.env
-  console.log(`api url : ${REACT_APP_API_URL}`)
+  //   console.log(`api url : ${REACT_APP_API_URL}`)
 
   const handleEmailChange = (e) => {
     e.preventDefault()
