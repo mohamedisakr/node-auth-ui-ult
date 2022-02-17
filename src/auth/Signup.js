@@ -1,4 +1,6 @@
+import axios from 'axios'
 import React, {useState} from 'react'
+import {toast} from 'react-toastify'
 import Layout from '../core/Layout'
 
 const Signup = () => {
@@ -6,6 +8,9 @@ const Signup = () => {
   const [email, setEmail] = useState('testman1978@hotmail.com')
   const [password, setPassword] = useState('Password123')
   const [buttonText, setButtonText] = useState('Submit')
+
+  const {REACT_APP_API_URL} = process.env
+  console.log(`api url : ${REACT_APP_API_URL}`)
 
   const handleNameChange = (e) => {
     e.preventDefault()
@@ -22,8 +27,28 @@ const Signup = () => {
     setPassword(e.target.value)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    setButtonText('Submitting...')
+
+    try {
+      const res = await axios({
+        method: 'POST',
+        url: `${REACT_APP_API_URL}/signup`,
+        data: {name, email, password},
+      })
+
+      console.log(`data : ${JSON.stringify(res)}`)
+      setName('')
+      setEmail('')
+      setPassword('')
+      setButtonText('Submitted')
+      toast.success(res.data.message)
+    } catch (err) {
+      console.log(`Signup error: ${err.response.data.error}`)
+      setButtonText('Submit')
+      toast.error(err.response.data.error)
+    }
   }
 
   const signupForm = () => {
