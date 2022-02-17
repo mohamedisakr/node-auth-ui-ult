@@ -1,13 +1,14 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 const Layout = ({children}) => {
   const Nav = () => {
     return (
       <ul className="nav nav-tabs bg-primary">
         <li className="nav-item">
-          <a href="/" className="text-light nav-link">
+          <Link to="/" className="text-light nav-link">
             Home
-          </a>
+          </Link>
         </li>
       </ul>
     )
