@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import {isAuthenticate} from '../auth/helpers'
 import Layout from './Layout'
 
@@ -13,6 +13,7 @@ const Admin = () => {
   return (
     <Layout>
       <h2>Admin Page {userRole}</h2>
+      {/* <h2>Admin Page</h2> */}
     </Layout>
   )
 }

@@ -62,3 +62,19 @@ export const isAuthenticate = () => {
     }
   }
 }
+
+export const isAdmin = () => {
+  if (window !== 'undefined') {
+    const hasCookie = getCookie('token')
+    if (hasCookie) {
+      const user = getLocalStorage('user')
+      console.log(`role === 'admin' : ${JSON.stringify(user.role)}`)
+
+      if (user.role === 'admin') {
+        return user
+      } else {
+        return false
+      }
+    }
+  }
+}
