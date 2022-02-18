@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, {useState} from 'react'
-import {Navigate} from 'react-router-dom'
+import {Navigate, useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import Layout from '../core/Layout'
 import {authenticate, isAuthenticate} from './helpers'
@@ -10,6 +10,7 @@ const Signin = () => {
   const [password, setPassword] = useState('Password123')
   const [buttonText, setButtonText] = useState('Submit')
 
+  const navigate = useNavigate()
   const {REACT_APP_API_URL} = process.env
   //   console.log(`api url : ${REACT_APP_API_URL}`)
 
@@ -41,7 +42,10 @@ const Signin = () => {
         setEmail('')
         setPassword('')
         setButtonText('Submitted')
-        toast.success(`Hello ${res.data.user.name}!`)
+        // toast.success(`Hello ${res.data.user.name}!`)
+        isAuthenticate() && isAuthenticate().role === 'admin'
+          ? navigate('/admin')
+          : navigate('/dashboard')
       })
     } catch (err) {
       //   console.log(`Signin error: ${err.response.data.error}`)
