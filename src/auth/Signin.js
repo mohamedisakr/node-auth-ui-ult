@@ -1,7 +1,9 @@
 import axios from 'axios'
 import React, {useState} from 'react'
+import {Navigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import Layout from '../core/Layout'
+import {authenticate, isAuthenticate} from './helpers'
 
 const Signin = () => {
   const [email, setEmail] = useState('testman1978@hotmail.com')
@@ -32,12 +34,15 @@ const Signin = () => {
         data: {email, password},
       })
 
-      console.log(`Signin data : ${JSON.stringify(res)}`)
+      // console.log(`Signin data : ${JSON.stringify(res)}`)
+
       // save {token, user} to local storage & cookie & redux
-      setEmail('')
-      setPassword('')
-      setButtonText('Submitted')
-      toast.success(`Hello ${res.data.user.name}!`)
+      authenticate(res, () => {
+        setEmail('')
+        setPassword('')
+        setButtonText('Submitted')
+        toast.success(`Hello ${res.data.user.name}!`)
+      })
     } catch (err) {
       //   console.log(`Signin error: ${err.response.data.error}`)
       console.log(`Signin error: ${JSON.stringify(err.response.data.message)}`)
@@ -79,9 +84,10 @@ const Signin = () => {
   return (
     <Layout>
       <div className="col-d-6 offset-md-3">
+        {isAuthenticate() ? <Navigate to="/" /> : null}
         <h1 className="p-5 text-center">Signin</h1>
         {signinForm()}
-        {/* <pre>{JSON.stringify({name, email, password})}</pre> */}
+        {/* <pre>User authenticated {JSON.stringify(isAuthenticate())}</pre> */}
       </div>
     </Layout>
   )
