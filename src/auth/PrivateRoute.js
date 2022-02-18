@@ -8,27 +8,3 @@ const PrivateRoute = ({children}) => {
 }
 
 export default PrivateRoute
-
-/*
-const PrivateRoute = ({children, ...rest}) => {
-  return (
-    <Route
-      {...rest}
-      render={({location}) =>
-        isAuthenticate().user ? (
-          children
-        ) : (
-          <Navigate
-            to={{
-              pathname: '/signin',
-              state: {from: location},
-            }}
-          />
-        )
-      }
-    />
-  )
-}
-
-export default PrivateRoute
-*/

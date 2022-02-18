@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import {isAuthenticate} from '../auth/helpers'
 import Layout from './Layout'
 
 const Dashboard = () => {
-  // const [name, setName] = useState('')
   const [userName, setUserName] = useState('')
+
   useEffect(() => {
     const {name} = isAuthenticate()
     setUserName(name)
