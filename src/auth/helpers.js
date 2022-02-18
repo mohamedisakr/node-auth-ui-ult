@@ -42,6 +42,12 @@ export const authenticate = (res, next) => {
   next()
 }
 
+export const signout = (next) => {
+  removeCookie('token')
+  removeLocalStorage('user')
+  next()
+}
+
 export const isAuthenticate = () => {
   if (window !== 'undefined') {
     const hasCookie = getCookie('token')

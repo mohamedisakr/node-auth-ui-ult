@@ -1,7 +1,9 @@
 import axios from 'axios'
 import React, {useState} from 'react'
+import {Navigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import Layout from '../core/Layout'
+import {isAuthenticate} from './helpers'
 
 const Signup = () => {
   const [name, setName] = useState('test man')
@@ -95,6 +97,7 @@ const Signup = () => {
   return (
     <Layout>
       <div className="col-d-6 offset-md-3">
+        {isAuthenticate() ? <Navigate to="/" /> : null}
         <h1 className="p-5 text-center">Signup</h1>
         {signupForm()}
         {/* <pre>{JSON.stringify({name, email, password})}</pre> */}
