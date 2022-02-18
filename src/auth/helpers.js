@@ -52,8 +52,10 @@ export const isAuthenticate = () => {
   if (window !== 'undefined') {
     const hasCookie = getCookie('token')
     if (hasCookie) {
-      if (getLocalStorage('user')) {
-        return getLocalStorage('user')
+      const user = getLocalStorage('user')
+      //   console.log(`user : ${JSON.stringify(user)}`)
+      if (user) {
+        return user
       } else {
         return false
       }

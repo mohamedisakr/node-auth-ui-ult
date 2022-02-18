@@ -63,6 +63,16 @@ const Layout = ({children}) => {
                 Signout
               </Link>
             </li>
+            {/* <li className="nav-item">
+              <Link
+                onClick={handleSignout}
+                to="/dashboard"
+                className={`nav-link`}
+                style={{color: '#fff'}}
+              >
+                Dashboard
+              </Link>
+            </li> */}
             <li className="nav-item">
               <span className="nav-link" style={{color: '#fff'}}>
                 Hello {isAuthenticate().name}
