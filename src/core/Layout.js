@@ -27,7 +27,7 @@ const Layout = ({children}) => {
             Home
           </Link>
         </li>
-        {!isAuthenticate() ? (
+        {!isAuthenticate() && (
           <>
             <li className="nav-item">
               <Link
@@ -48,37 +48,39 @@ const Layout = ({children}) => {
               </Link>
             </li>
           </>
-        ) : (
-          <>
-            <li className="nav-item">
-              {/* <span onClick={handleSignout} className="nav-link">
+        )}
+
+        {isAuthenticate() && (
+          <li className="nav-item">
+            <Link
+              onClick={handleSignout}
+              to="/"
+              className={`nav-link`}
+              style={{color: '#fff'}}
+            >
               Signout
-            </span> */}
-              <Link
-                onClick={handleSignout}
-                to="/"
-                className={`nav-link`}
-                style={{color: '#fff'}}
-              >
-                Signout
-              </Link>
-            </li>
-            {/* <li className="nav-item">
-              <Link
-                onClick={handleSignout}
-                to="/dashboard"
-                className={`nav-link`}
-                style={{color: '#fff'}}
-              >
-                Dashboard
-              </Link>
-            </li> */}
-            <li className="nav-item">
-              <span className="nav-link" style={{color: '#fff'}}>
-                Hello {isAuthenticate().name}
-              </span>
-            </li>
-          </>
+            </Link>
+          </li>
+        )}
+
+        {isAuthenticate() && isAuthenticate().role === 'admin' && (
+          <li className="nav-item">
+            <Link to="/admin" className="nav-link" style={isActive('/admin')}>
+              Hello {isAuthenticate().name}
+            </Link>
+          </li>
+        )}
+
+        {isAuthenticate() && isAuthenticate().role === 'subscriber' && (
+          <li className="nav-item">
+            <Link
+              to="/dashboard"
+              className="nav-link"
+              style={isActive('/dashboard')}
+            >
+              Hello {isAuthenticate().name}
+            </Link>
+          </li>
         )}
       </ul>
     )
