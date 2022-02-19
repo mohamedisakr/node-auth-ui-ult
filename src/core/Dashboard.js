@@ -1,31 +1,56 @@
 import axios from 'axios'
-import React, {useState} from 'react'
-import {Navigate} from 'react-router-dom'
+import React, {useEffect, useState} from 'react'
+import {useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import Layout from '../core/Layout'
-import {isAuthenticate} from '../auth/helpers'
-
-// import {useEffect, useState} from 'react'
-// import Layout from './Layout'
+import {getCookie, isAuthenticate, signout} from '../auth/helpers'
 
 const Dashboard = () => {
-  const [name, setName] = useState('test man')
-  const [role, setRole] = useState('test man')
-  const [email, setEmail] = useState('testman1978@hotmail.com')
-  const [password, setPassword] = useState('Password123')
+  const [name, setName] = useState('')
+  const [role, setRole] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [buttonText, setButtonText] = useState('Submit')
 
+  const token = getCookie('token')
+  const navigate = useNavigate()
   const {REACT_APP_API_URL} = process.env
-  console.log(`api url : ${REACT_APP_API_URL}`)
+  // console.log(`api url : ${REACT_APP_API_URL}`)
+
+  useEffect(() => {
+    loadProfile()
+  }, [])
+
+  const loadProfile = async () => {
+    const id = isAuthenticate()._id
+    try {
+      const res = await axios({
+        method: 'GET',
+        url: `${REACT_APP_API_URL}/user/${id}`,
+        headers: {Authorization: `Bearer ${token}`},
+      })
+
+      console.log(`data : ${JSON.stringify(res.data)}`)
+      const {name, email, role} = res.data
+
+      setRole(role)
+      setName(name)
+      setEmail(email)
+    } catch (err) {
+      console.log(`Signup error: ${err.response.data.error}`)
+      if (err.response.status === 401) {
+        signout(() => {
+          navigate('/')
+        })
+      }
+      setButtonText('Submit')
+      toast.error(err.response.data.error)
+    }
+  }
 
   const handleNameChange = (e) => {
     e.preventDefault()
     setName(e.target.value)
-  }
-
-  const handleEmailChange = (e) => {
-    e.preventDefault()
-    setEmail(e.target.value)
   }
 
   const handlePasswordChange = (e) => {
@@ -62,7 +87,12 @@ const Dashboard = () => {
       <form>
         <div className="form-group">
           <label className="text-muted">Role:</label>
-          <input value={role} type="text" className="form-control" />
+          <input
+            defaultValue={role}
+            type="text"
+            className="form-control"
+            readOnly
+          />
         </div>
 
         <div className="form-group">
@@ -77,7 +107,12 @@ const Dashboard = () => {
 
         <div className="form-group">
           <label className="text-muted">Email:</label>
-          <input value={email} type="email" className="form-control" />
+          <input
+            defaultValue={email}
+            type="email"
+            className="form-control"
+            readOnly
+          />
         </div>
 
         <div className="form-group">
