@@ -78,3 +78,14 @@ export const isAdmin = () => {
     }
   }
 }
+
+export const updateUser = (res, next) => {
+  console.log(`updating user data in local storage`, res)
+  if (typeof window !== 'undefined') {
+    let auth = localStorage.getItem('user')
+    auth = res.data
+    localStorage.setItem('user', JSON.stringify(auth))
+  }
+
+  next()
+}

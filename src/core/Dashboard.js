@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import Layout from '../core/Layout'
-import {getCookie, isAuthenticate, signout} from '../auth/helpers'
+import {getCookie, isAuthenticate, signout, updateUser} from '../auth/helpers'
 
 const Dashboard = () => {
   const [name, setName] = useState('')
@@ -60,25 +60,25 @@ const Dashboard = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setButtonText('Submitting...')
 
     try {
       const res = await axios({
-        method: 'POST',
-        url: `${REACT_APP_API_URL}/signup`,
-        data: {name, email, password},
+        method: 'PUT',
+        url: `${REACT_APP_API_URL}/user/update`,
+        headers: {Authorization: `Bearer ${token}`},
+        data: {name, password},
       })
 
       console.log(`data : ${JSON.stringify(res)}`)
-      setName('')
-      setEmail('')
-      setPassword('')
-      setButtonText('Submitted')
-      toast.success(res.data.message)
+      updateUser(res, () => {
+        setButtonText('Submitted')
+        toast.success('Profile updated successfully.')
+      })
     } catch (err) {
-      console.log(`Signup error: ${err.response.data.error}`)
+      // console.log(`Signup error: ${err.response.data.error}`)
+      console.log(`Signup error: ${err.response.data.message}`)
       setButtonText('Submit')
-      toast.error(err.response.data.error)
+      toast.error(err.response.data.message)
     }
   }
 
