@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, {useState} from 'react'
-import {Navigate} from 'react-router-dom'
+import {Link, Navigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import Layout from '../core/Layout'
 import {isAuthenticate} from './helpers'
@@ -100,6 +100,10 @@ const Signup = () => {
         {isAuthenticate() ? <Navigate to="/" /> : null}
         <h1 className="p-5 text-center">Signup</h1>
         {signupForm()}
+        <br />
+        <Link to="/forgot" className="btn btn-sm btn-outline-danger">
+          Forget Password
+        </Link>
         {/* <pre>{JSON.stringify({name, email, password})}</pre> */}
       </div>
     </Layout>

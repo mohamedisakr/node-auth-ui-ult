@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, {useState} from 'react'
-import {Navigate, useNavigate} from 'react-router-dom'
+import {Link, Navigate, useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import Layout from '../core/Layout'
 import {authenticate, isAuthenticate} from './helpers'
@@ -91,7 +91,10 @@ const Signin = () => {
         {isAuthenticate() ? <Navigate to="/" /> : null}
         <h1 className="p-5 text-center">Signin</h1>
         {signinForm()}
-        {/* <pre>User authenticated {JSON.stringify(isAuthenticate())}</pre> */}
+        <br />
+        <Link to="/forgot" className="btn btn-sm btn-outline-danger">
+          Forget Password
+        </Link>
       </div>
     </Layout>
   )
