@@ -3,6 +3,7 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import App from './App'
 import Activate from './auth/Activate'
 import AdminRoute from './auth/AdminRoute'
+import Forgot from './auth/Forgot'
 import PrivateRoute from './auth/PrivateRoute'
 import Signin from './auth/Signin'
 import Signup from './auth/Signup'
@@ -17,6 +18,7 @@ const RoutesApp = () => {
         <Route path="/signup" exact element={<Signup />} />
         <Route path="/signin" exact element={<Signin />} />
         <Route path="/admin" exact element={<Admin />} />
+        <Route path="/forgot" exact element={<Forgot />} />
         <Route path="/auth/activate/:token" exact element={<Activate />} />
         <Route
           exact
